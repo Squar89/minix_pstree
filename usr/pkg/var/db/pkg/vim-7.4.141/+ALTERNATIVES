@@ -1,3 +1,0 @@
-bin/ex /usr/pkg/bin/vim -e
-bin/vi /usr/pkg/bin/vim
-bin/view /usr/pkg/bin/vim -R
