@@ -2,6 +2,6 @@
 
 int main(int argc, char** argv)
 {
-    pstree(-1, -1);
+    pstree(4, 0);
     return 0;
 }

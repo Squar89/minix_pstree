@@ -26,6 +26,5 @@ int pstree(pid_t pid, int uid) {
     m_values.m1i3 = getgid();
     m.m_m1 = m_values;
 
-    _syscall(pm_ep, PM_PSTREE, &m);
-    return 0;
+    return _syscall(pm_ep, PM_PSTREE, &m);
 }
