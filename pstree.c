@@ -4,11 +4,15 @@
 #include "pm.h"
 #include "mproc.h"
 
-void print_level(int level) {
+int print_level(int level) {
     while (level > 0) {
-        printf ("---");
+        if (printf ("---") < 0) {
+            return -1;
+        }
         level--;
     }
+
+    return 0;
 }
 
 int pstree_print(short pid, int uid, int guid, int level) {
@@ -57,9 +61,13 @@ int pstree_print(short pid, int uid, int guid, int level) {
     if (mproc[mprocIndex].mp_realuid == uid
         && mproc[mprocIndex].mp_realgid == guid
         && (mproc[mprocIndex].mp_flags & IN_USE) == 1) {
-        /* print this process pid and pids of its eligible chldren recursively */
-        print_level(level);
-        printf("%d\n", pid);
+        /* print this process pid and pids of its eligible children recursively */
+        if (print_level(level) == -1) {
+            return -1;
+        }
+        if (printf("%d\n", pid) < 0) {
+            return -1;
+        }
 
         for (int i = 0; i < counter; i++) {
             return_value += pstree_print(child[i], uid, guid, level + 1);
@@ -80,7 +88,6 @@ int do_pstree(void) {
     pid = m_in.m_m1.m1i1;
     uid = m_in.m_m1.m1i2;
     guid = m_in.m_m1.m1i3;
-    printf("Hello world!\nMy message is pid=%d uid=%d guid=%d\n", pid, uid, guid);/*TODO DEBUG*/
 
     return pstree_print(pid, uid, guid, 0);
 }
