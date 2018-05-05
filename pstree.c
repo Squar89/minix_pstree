@@ -15,9 +15,9 @@ int print_level(int level) {
     return 0;
 }
 
-int pstree_print(short pid, int uid, int guid, int level) {
-    short child[256];//contains sorted pids of child processes
-    short mprocIndex, counter = 0, return_value = 0;
+int pstree_print(pid_t pid, int uid, int guid, int level) {
+    pid_t child[256];//contains sorted pids of child processes
+    int mprocIndex, counter = 0, return_value = 0;
 
     /* find index of process with given pid in mproc table */
     for (int i = 0; i < NR_PROCS; i++) {
@@ -39,7 +39,7 @@ int pstree_print(short pid, int uid, int guid, int level) {
     }
 
     /* sort children table (bubble sort) */
-    short tmp, sorted = 0;
+    int tmp, sorted = 0;
     while (!sorted) {
         sorted = 1;
         for (int i = 0; i < counter - 1; i++) {
@@ -82,7 +82,7 @@ int pstree_print(short pid, int uid, int guid, int level) {
 }
 
 int do_pstree(void) {
-    short pid;
+    pid_t pid;
     int uid, guid;
     
     pid = m_in.m_m1.m1i1;
